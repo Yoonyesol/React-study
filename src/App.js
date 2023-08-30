@@ -1,4 +1,5 @@
-import Expenses from "./components/Expenses";
+import React from "react";
+import Expenses from "./components/Expenses/Expenses";
 
 function App() {
   const expenseDate = new Date(2023, 8, 28);
@@ -27,10 +28,18 @@ function App() {
     },
   ];
 
+  // JSX 배후에서 동작되는 코드(복잡하다!)
+  // return React.createElement(
+  //   "div",
+  //   {},
+  //   React.createElement("h2", {}, "Let's get started!"),
+  //   React.createElement(Expenses, { items: expenses })
+  // );
+
   return (
     <div>
       <h2>Let's get started!</h2>
-      <Expenses expenses={expenses} />
+      <Expenses items={expenses} />
     </div>
   );
 }
