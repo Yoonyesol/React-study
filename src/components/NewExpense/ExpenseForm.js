@@ -18,17 +18,37 @@ const ExpenseForm = () => {
     setEnteredDate(e.target.value);
   };
 
+  const sumbmitHandler = (e) => {
+    e.preventDefault(); //요청이 자동으로 서버에 발송되는 것을 막는다(=>페이지 로딩을 막을 수 있다)
+
+    const expenseData = {
+      title: enteredTitle,
+      amount: eneteredAmount,
+      date: new Date(enteredDate),
+    };
+    console.log(expenseData);
+    //입력폼 비우기(input 태그의 value 속성 사용): 양방향 바인딩
+    setEnteredTitle("");
+    setEnteredAmount("");
+    setEnteredDate("");
+  };
+
   return (
-    <form>
+    <form onSubmit={sumbmitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input type="text" onChange={titleChangeHandler} />
+          <input
+            type="text"
+            value={enteredTitle}
+            onChange={titleChangeHandler}
+          />
         </div>
         <div className="new-expense__control">
           <label>Amount</label>
           <input
             type="number"
+            value={eneteredAmount}
             min="0.01"
             step="0.01"
             onChange={amountChangeHandler}
@@ -38,6 +58,7 @@ const ExpenseForm = () => {
           <label>Date</label>
           <input
             type="date"
+            value={enteredDate}
             min="2019-01-01"
             max="2023-12-31"
             onChange={dateChangeHandler}
