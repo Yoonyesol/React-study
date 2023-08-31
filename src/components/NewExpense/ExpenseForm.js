@@ -6,47 +6,16 @@ const ExpenseForm = () => {
   const [eneteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
 
-  const [userInput, setUserInput] = useState({
-    enteredTitle: "",
-    eneteredAmount: "",
-    enteredDate: "",
-  });
-
   const titleChangeHandler = (e) => {
-    //setEnteredTitle(e.target.value);
-    // setUserInput({
-    //   ...userInput,
-    //   enteredTitle: e.target.value,
-    // });
-    setUserInput((prevState) => {
-      return { ...prevState, enteredTitle: e.target.value };
-    });
+    setEnteredTitle(e.target.value);
   };
 
   const amountChangeHandler = (e) => {
-    //setEnteredAmount(e.target.value);
-    setUserInput({
-      ...userInput,
-      eneteredAmount: e.target.value,
-    });
+    setEnteredAmount(e.target.value);
   };
 
   const dateChangeHandler = (e) => {
-    //setEnteredDate(e.target.value);
-    setUserInput({
-      ...userInput,
-      enteredDate: e.target.value,
-    });
-  };
-
-  const inputChangeHandler = (identifier, value) => {
-    if (identifier === "title") {
-      setEnteredTitle(value);
-    } else if (identifier === "date") {
-      setEnteredDate(value);
-    } else {
-      setEnteredAmount(value);
-    }
+    setEnteredDate(e.target.value);
   };
 
   return (
@@ -63,7 +32,6 @@ const ExpenseForm = () => {
             min="0.01"
             step="0.01"
             onChange={amountChangeHandler}
-            //onChange={(e) => inputChangeHandler("title", e.target.value)}
           />
         </div>
         <div className="new-expense__control">
