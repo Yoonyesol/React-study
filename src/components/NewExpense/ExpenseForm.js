@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./ExpenseForm.css";
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [eneteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
@@ -26,7 +26,10 @@ const ExpenseForm = () => {
       amount: eneteredAmount,
       date: new Date(enteredDate),
     };
-    console.log(expenseData);
+
+    //상위 컴포넌트에서 함수포인터로 전달받은 함수를 실행하여 expenseData를 전달하면
+    //상위 컴포넌트가 expenseData값을 인자로 받게 됨
+    props.onSaveExpenseData(expenseData);
     //입력폼 비우기(input 태그의 value 속성 사용): 양방향 바인딩
     setEnteredTitle("");
     setEnteredAmount("");
