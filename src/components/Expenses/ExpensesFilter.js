@@ -4,7 +4,7 @@ import "./ExpensesFilter.css";
 
 const ExpensesFilter = (props) => {
   const dropdownChangeHandler = (e) => {
-    props.onChangeFilter(e.target.value); //select의 value값이 부모에게로 전달된다
+    props.onChangeFilter(e.target.value); //select의 value값과 onChange의 함수가 부모에게로 전달된다. 부모 컴포넌트가 현재 컴포넌트의 상태를 관리
   };
 
   return (
