@@ -8,7 +8,6 @@ const NewExpense = (props) => {
       ...enteredExpenseData,
       id: Math.random().toString(),
     };
-    console.log(expenseData);
 
     //ExpenseForm 컴포넌트에서 이벤트 발생 시 실행되는 함수이므로 이 안에 App.js로 데이터를 보낼 함수를 실행시킨다.
     props.onAddExpense(expenseData);
