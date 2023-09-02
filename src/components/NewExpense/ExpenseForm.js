@@ -23,7 +23,7 @@ const ExpenseForm = (props) => {
 
     const expenseData = {
       title: enteredTitle,
-      amount: eneteredAmount,
+      amount: +eneteredAmount, //버그수정: 여러값을 추가할 때 숫자가 아닌 문자열로 저장되는 버그 수정
       date: new Date(enteredDate),
     };
 
