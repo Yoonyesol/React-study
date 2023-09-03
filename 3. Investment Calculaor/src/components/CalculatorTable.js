@@ -1,4 +1,12 @@
-const CalculatorTable = (props) => {
+const CalculatorTable = ({ cacResult, initialInvestment }) => {
+  //숫자 -> 통화 서식
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
   return (
     <table className="result">
       <thead>
@@ -11,13 +19,25 @@ const CalculatorTable = (props) => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>YEAR NUMBER</td>
-          <td>TOTAL SAVINGS END OF YEAR</td>
-          <td>INTEREST GAINED IN YEAR</td>
-          <td>TOTAL INTEREST GAINED</td>
-          <td>TOTAL INVESTED CAPITAL</td>
-        </tr>
+        {cacResult.map((it) => (
+          <tr key={it.year}>
+            <td>{it.year}</td>
+            <td>{formatter.format(it.savingsEndOfYear)}</td>
+            <td>{formatter.format(it.yearlyInterest)}</td>
+            <td>
+              {formatter.format(
+                it.savingsEndOfYear -
+                  initialInvestment -
+                  it.yearlyContribution * it.year
+              )}
+            </td>
+            <td>
+              {formatter.format(
+                initialInvestment + it.yearlyContribution * it.year
+              )}
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
