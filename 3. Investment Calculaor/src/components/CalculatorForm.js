@@ -20,7 +20,7 @@ const CalculatorForm = (props) => {
       //prevInput: 최신값
       return {
         ...prevInput,
-        [input]: value, //['식별자']를 통해 프로퍼티에 동적 접근 가능(대괄호 표기법)
+        [input]: +value, //['식별자']를 통해 프로퍼티에 동적 접근 가능(대괄호 표기법)
       };
     });
   };
