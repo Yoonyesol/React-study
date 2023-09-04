@@ -1,3 +1,5 @@
+import styles from "./CalculatorTable.module.css";
+
 const CalculatorTable = ({ cacResult, initialInvestment }) => {
   //숫자 -> 통화 서식
   const formatter = new Intl.NumberFormat("en-US", {
@@ -8,7 +10,7 @@ const CalculatorTable = ({ cacResult, initialInvestment }) => {
   });
 
   return (
-    <table className="result">
+    <table className={styles.result}>
       <thead>
         <tr>
           <th>Year</th>

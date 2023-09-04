@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./CalculatorForm.module.css";
 
 // input 초기값
 // 컴포넌트 변경 시 리렌더링 될 필요가 없는 데이터: 컴포넌트 밖에 선언
@@ -36,8 +37,8 @@ const CalculatorForm = (props) => {
   };
 
   return (
-    <form className="form" onSubmit={submitHandler}>
-      <div className="input-group">
+    <form className={styles.form} onSubmit={submitHandler}>
+      <div className={styles["input-group"]}>
         <p>
           <label htmlFor="current-savings">Current Savings ($)</label>
           <input
@@ -61,7 +62,7 @@ const CalculatorForm = (props) => {
           />
         </p>
       </div>
-      <div className="input-group">
+      <div className={styles["input-group"]}>
         <p>
           <label htmlFor="expected-return">
             Expected Interest (%, per year)
@@ -85,11 +86,15 @@ const CalculatorForm = (props) => {
           />
         </p>
       </div>
-      <p className="actions">
-        <button type="reset" className="buttonAlt" onClick={resetHandler}>
+      <p className={styles.actions}>
+        <button
+          type="reset"
+          className={styles.buttonAlt}
+          onClick={resetHandler}
+        >
           Reset
         </button>
-        <button type="submit" className="button">
+        <button type="submit" className={styles.button}>
           Calculate
         </button>
       </p>
