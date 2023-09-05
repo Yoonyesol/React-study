@@ -1,13 +1,17 @@
 import styles from "./UserList.module.css";
+import Card from "../common/Card";
 
 const UserList = (props) => {
   return (
-    <div className={styles.users}>
+    <Card className={styles.users}>
       <ul>
-        <li>{props.data.userName}</li>
-        <li>{props.data.age}</li>
+        {props.data.map((it) => (
+          <li key={it.id}>
+            {it.userName} ({+it.age} years old)
+          </li>
+        ))}
       </ul>
-    </div>
+    </Card>
   );
 };
 export default UserList;
