@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./AddUser.module.css";
 import Button from "../common/Button";
 import Card from "../common/Card";
+import ErrorModal from "../common/ErrorModal";
 
 const AddUser = (props) => {
   const [userInput, setUserInput] = useState({
@@ -9,6 +10,7 @@ const AddUser = (props) => {
     userName: "",
     age: "",
   });
+  const [error, setError] = useState();
 
   const inputUserHandler = (input, data) => {
     setUserInput((prevData) => {
@@ -26,9 +28,19 @@ const AddUser = (props) => {
       userInput.userName.trim().length === 0 ||
       userInput.age.trim().length === 0
     ) {
+      setError({
+        //오류에 따라 다른 상태를 설정
+        title: "Invalid input",
+        message: "Please enter a valid name and age (non-empty values).",
+      });
       return;
     }
     if (+userInput.age < 1) {
+      setError({
+        //오류가 정의될 때마다 렌더링되도록 값을 설정
+        title: "Invalid age",
+        message: "Please enter a valid age (> 0).",
+      });
       return;
     }
     props.saveNewUser(userInput); //상위 컴포넌트로 데이터 전송
@@ -40,26 +52,39 @@ const AddUser = (props) => {
     });
   };
 
+  const errorHandler = () => {
+    setError(null); //에러객체를 null로 설정해 falsy취급됨
+  };
+
   return (
-    <Card className={styles.input}>
-      <form onSubmit={submitHandler}>
-        <label htmlFor="userName">Username</label>
-        <input
-          id="userName"
-          type="text"
-          value={userInput.userName}
-          onChange={(e) => inputUserHandler("userName", e.target.value)}
+    <div>
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={errorHandler}
         />
-        <label htmlFor="age">Age(Years)</label>
-        <input
-          id="age"
-          type="number"
-          value={userInput.age}
-          onChange={(e) => inputUserHandler("age", e.target.value)}
-        />
-        <Button type="submit">Add User</Button>
-      </form>
-    </Card>
+      )}
+      <Card className={styles.input}>
+        <form onSubmit={submitHandler}>
+          <label htmlFor="userName">Username</label>
+          <input
+            id="userName"
+            type="text"
+            value={userInput.userName}
+            onChange={(e) => inputUserHandler("userName", e.target.value)}
+          />
+          <label htmlFor="age">Age(Years)</label>
+          <input
+            id="age"
+            type="number"
+            value={userInput.age}
+            onChange={(e) => inputUserHandler("age", e.target.value)}
+          />
+          <Button type="submit">Add User</Button>
+        </form>
+      </Card>
+    </div>
   );
 };
 export default AddUser;
