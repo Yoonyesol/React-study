@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styles from "./AddUser.module.css";
 import Button from "../common/Button";
 import Card from "../common/Card";
@@ -6,6 +6,9 @@ import ErrorModal from "../common/ErrorModal";
 import Wrapper from "../Helpers/Wrapper";
 
 const AddUser = (props) => {
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
+
   const [userInput, setUserInput] = useState({
     id: "",
     userName: "",
@@ -25,10 +28,10 @@ const AddUser = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault(); //오류 원인
-    if (
-      userInput.userName.trim().length === 0 ||
-      userInput.age.trim().length === 0
-    ) {
+    const enteredName = nameInputRef.current.value; //ref가 지정된 dom의 값을 얻어온다.
+    const etenteredAge = ageInputRef.current.value;
+    console.log(nameInputRef);
+    if (enteredName.trim().length === 0 || etenteredAge.trim().length === 0) {
       setError({
         //오류에 따라 다른 상태를 설정
         title: "Invalid input",
@@ -36,7 +39,7 @@ const AddUser = (props) => {
       });
       return;
     }
-    if (+userInput.age < 1) {
+    if (+etenteredAge < 1) {
       setError({
         //오류가 정의될 때마다 렌더링되도록 값을 설정
         title: "Invalid age",
@@ -74,6 +77,7 @@ const AddUser = (props) => {
             type="text"
             value={userInput.userName}
             onChange={(e) => inputUserHandler("userName", e.target.value)}
+            ref={nameInputRef}
           />
           <label htmlFor="age">Age(Years)</label>
           <input
@@ -81,6 +85,7 @@ const AddUser = (props) => {
             type="number"
             value={userInput.age}
             onChange={(e) => inputUserHandler("age", e.target.value)}
+            ref={ageInputRef}
           />
           <Button type="submit">Add User</Button>
         </form>
