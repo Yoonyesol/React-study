@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import ReaceDOM from "react-dom";
 
 const Backdrop = (props) => {
-  return <div className={classes.backdrop} />;
+  return <div className={classes.backdrop} onClick={props.onClose} />;
 };
 
 const ModalOverlay = (props) => {
@@ -20,7 +20,10 @@ const Modal = (props) => {
   return (
     <Fragment>
       {/* 포털대상, 어디로 이동시킬 것인지 위치 */}
-      {ReaceDOM.createPortal(<Backdrop />, partalElement)}
+      {ReaceDOM.createPortal(
+        <Backdrop onClose={props.onClose} />,
+        partalElement
+      )}
       {ReaceDOM.createPortal(
         <ModalOverlay>{props.children}</ModalOverlay>,
         partalElement
