@@ -1,8 +1,9 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
+import AuthContext from "../../store/auth-context";
 
 //리듀서 함수는 컴포넌트 내부의 어떤 데이터와도 상호작용하지 않으므로, 컴포넌트 외부에 만든다.
 //현재 state, action 객체를 이자로 받아 기존 state를 대체한 새로운 state를 반환한다.
@@ -46,6 +47,8 @@ const Login = (props) => {
     isValid: null,
   });
 
+  const authCtx = useContext(AuthContext);
+
   const { isValid: emailIsValid } = emailState; //객체 디스럭쳐링: emailState에서 isValid 속성을 뽑아냄 (:뒤에 별칭 할당)
   const { isValid: passwordIsValid } = passwordState;
 
@@ -83,7 +86,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    authCtx.onLogin(emailState.value, passwordState.value);
   };
 
   return (
