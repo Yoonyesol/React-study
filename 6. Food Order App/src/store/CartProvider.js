@@ -40,6 +40,29 @@ const cartReducer = (state, action) => {
       totalAmount: updatedTotalAmount,
     };
   }
+  if (action.type === "REMOVE") {
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.id
+    );
+    const existingItem = state.items[existingCartItemIndex]; //장바구니에 존재하는 item
+    const updatedTotalAmount = state.totalAmount - existingItem.price; //item 가격만큼 총 가격 내리기
+
+    let updatedItems;
+    if (existingItem.amount === 1) {
+      //수량이 1개 남았을 경우 remove를 하면 장바구니에서 해당 항목 완전삭제
+      updatedItems = state.items.filter((item) => item.id !== action.id);
+    } else {
+      //수량이 2개 이상 남았을 경우 총 수량에서 1개 빼기
+      const updatedItem = { ...existingItem, amount: existingItem.amount - 1 };
+      updatedItems = [...state.items]; //기존 아이템 복사
+      updatedItems[existingCartItemIndex] = updatedItem; //기존 아이템 복사본에서 장바구니 항목의 내용만 업데이트한 내용으로 대체하기
+    }
+    return {
+      items: updatedItems, //장바구니 내용만 변경된 복사본을 전달
+      totalAmount: updatedTotalAmount, //총 가격 업데이트
+    };
+  }
+
   return defaultCartState;
 };
 
