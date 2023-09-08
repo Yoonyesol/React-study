@@ -10,9 +10,31 @@ const defaultCartState = {
 
 const cartReducer = (state, action) => {
   if (action.type === "ADD") {
-    const updatedItems = state.items.concat(action.item); //배열 뒤에 다른 아이템을 붙여 새로운 배열을 반환(push: 기존 배열 자체가 변한다)
     const updatedTotalAmount =
       state.totalAmount + action.item.price * action.item.amount;
+
+    //항목이 이미 장바구니에 들어있는지 확인하는 로직
+    //장바구니에 동일한 id를 가진 item이 들어있으면, 해당 item의 인덱스를 저장
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.item.id
+    );
+    //인덱스를 이용해 장바구니에 있는 동일한 item을 저장. 해당 항목이 없다면 null이 저장될 것임
+    const existingCartItem = state.items[existingCartItemIndex];
+    let updatedItems;
+
+    //existingCartItem이 존재한다면
+    if (existingCartItem) {
+      const updatedItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount + action.item.amount, //기존 수량에 새로 들어온 수량을 더한다
+      };
+      updatedItems = [...state.items]; //기존 항목 복사한 배열
+      updatedItems[existingCartItemIndex] = updatedItem; //기존 항목을 대체
+    } else {
+      //existingCartItem이 존재하지 않는다면
+      updatedItems = state.items.concat(action.item); //기존처럼 계속 아래에 배열을 추가
+    }
+
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
