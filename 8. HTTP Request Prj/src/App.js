@@ -6,23 +6,22 @@ import './App.css';
 function App() {
   const [movies, setMovies] = useState([]);
 
-  function fetchMoviesHandler() {
-    fetch('https://swapi.dev/api/films/').then(response => {
-      return response.json(); //프로미스 객체 반환
-    }).then(data => {
-      const transformedMovies = data.results.map(movieData => {
-        return {
-          id: movieData.episode_id,
-          title: movieData.title,
-          openingText: movieData.opening_crawl,
-          releaseDate: movieData.release_date
-        }
-      })
-      setMovies(transformedMovies);
-    });  //데이터처리 끝나고 처리할 함수 지정
-  }
+  //비동기화 코드
+  async function fetchMoviesHandler() {
+    const response = await fetch('https://swapi.dev/api/films/');
+    const data = await response.json();
+    
+    const transformedMovies = data.results.map(movieData => {
+      return {
+        id: movieData.episode_id,
+        title: movieData.title,
+        openingText: movieData.opening_crawl,
+        releaseDate: movieData.release_date
+      };
+    });
+    setMovies(transformedMovies);
+  };
   
-
   return (
     <React.Fragment>
       <section>
