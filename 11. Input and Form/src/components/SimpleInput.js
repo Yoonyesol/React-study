@@ -1,19 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 const SimpleInput = (props) => {
-  const nameInputRef = useRef();
   const [enteredName, setEnteredName] = useState("");
-  const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
   const [enteredNameTouched, setEnteredNameTouched] = useState(false); //입력란이 건드려지는가 확인하는 state
 
-  useEffect(() => {
-    if (enteredNameIsValid) {
-      console.log("Name Input is valid!");
-    }
-  }, [enteredNameIsValid]);
+  const enteredNameIsValid = enteredName.trim() !== ""; //입력값이 존재함
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched; //입력값이 존재하지 않고 입력창이 건드려졌다면
 
   const nameInputChangeHandler = (e) => {
     setEnteredName(e.target.value);
+  };
+
+  const nameInputBlurHandler = (e) => {
+    setEnteredNameTouched(true); //입력창에서 초점을 잃었다는 것은 그 전에 사용자가 입력창을 건드렸다는 뜻
   };
 
   const formSubmissionHandler = (e) => {
@@ -22,23 +21,16 @@ const SimpleInput = (props) => {
     setEnteredNameTouched(true);
 
     //유효성 검증: 빈 입력값은 전송되지 않게 한다.
-    if (enteredName.trim() === "") {
-      setEnteredNameIsValid(false);
+    if (!enteredNameIsValid) {
       return;
     }
 
-    setEnteredNameIsValid(true);
-
     console.log(enteredName);
-
-    const enteredValue = nameInputRef.current.value;
-    console.log(enteredValue);
 
     //nameInputRef.current.value = "";  //자바스크립트로 DOM에 접근하는 방식. 지양해야 함
     setEnteredName("");
+    setEnteredNameTouched(false);
   };
-
-  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
 
   const nameInputClasses = nameInputIsInvalid
     ? "form-control invalid"
@@ -49,10 +41,10 @@ const SimpleInput = (props) => {
       <div className={nameInputClasses}>
         <label htmlFor="name">Your Name</label>
         <input
-          ref={nameInputRef}
           type="text"
           id="name"
           onChange={nameInputChangeHandler}
+          onBlur={nameInputBlurHandler}
           value={enteredName}
         />
         {nameInputIsInvalid && (
