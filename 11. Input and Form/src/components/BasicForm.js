@@ -15,7 +15,7 @@ const BasicForm = (props) => {
     hasError: lastnameHasError,
     valueChangeHandler: lastnameChangeHandler,
     valueBlurHandler: lastnameBlurHandler,
-    reset: lasttnameReset,
+    reset: lastnameReset,
   } = useInput((value) => value.trim() !== "");
   const {
     value: emailVal,
@@ -47,7 +47,7 @@ const BasicForm = (props) => {
     console.log(emailVal);
 
     firstnameReset();
-    lasttnameReset();
+    lastnameReset();
     emailReset();
   };
 
