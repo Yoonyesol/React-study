@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./Counter.module.css";
-import { INCREMENT } from "../store/index";
+import { counterActions } from "../store/index";
 
 const Counter = () => {
   //useSelector: 저장소의 데이터에 접근하기(자동으로 구독 설정) -> 리덕스 저장소 내 데이터 변경 시 컴포넌트 함수 리렌더링
@@ -11,19 +11,19 @@ const Counter = () => {
   const show = useSelector((state) => state.showCounter);
 
   const incrementHandler = () => {
-    dispatch({ type: INCREMENT });
+    dispatch(counterActions.increment());
   };
 
   const increseHandler = () => {
-    dispatch({ type: "increse", amount: 5 });
+    dispatch(counterActions.increase(5));
   };
 
   const decrementHandler = () => {
-    dispatch({ type: "decrement" });
+    dispatch(counterActions.decrement());
   };
 
   const toggleCounterHandler = () => {
-    dispatch({ type: "toggle" });
+    dispatch(counterActions.toggleCounter());
   };
 
   return (
