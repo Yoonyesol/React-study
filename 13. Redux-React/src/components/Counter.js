@@ -5,10 +5,10 @@ import { counterActions } from "../store/index";
 
 const Counter = () => {
   //useSelector: 저장소의 데이터에 접근하기(자동으로 구독 설정) -> 리덕스 저장소 내 데이터 변경 시 컴포넌트 함수 리렌더링
-  const counter = useSelector((state) => state.counter);
+  const counter = useSelector((state) => state.counter.counter);
   //redux store에 대한 action을 보내는 함수
   const dispatch = useDispatch();
-  const show = useSelector((state) => state.showCounter);
+  const show = useSelector((state) => state.counter.showCounter);
 
   const incrementHandler = () => {
     dispatch(counterActions.increment());
