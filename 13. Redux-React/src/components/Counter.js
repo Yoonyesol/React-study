@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./Counter.module.css";
-import { counterActions } from "../store/index";
+import { counterActions } from "../store/counter";
 
 const Counter = () => {
   //useSelector: 저장소의 데이터에 접근하기(자동으로 구독 설정) -> 리덕스 저장소 내 데이터 변경 시 컴포넌트 함수 리렌더링
