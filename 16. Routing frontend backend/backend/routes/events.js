@@ -12,10 +12,7 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const events = await getAll();
-    setTimeout(() => {
-      //1.5 초 후에 데이터가 프론트엔드로 전송
-      res.json({ events: events });
-    }, 1500);
+    res.json({ events: events });
   } catch (error) {
     next(error);
   }
