@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, json } from "react-router-dom";
 
 import EventsList from "../components/EventsList";
 
@@ -18,7 +18,7 @@ export default EventsPage;
 
 //loader 코드는 서버에서 실행되지 않는다. (브라우저에서 실행됨)
 export async function loader() {
-  const response = await fetch("http://localhost:8080/eventsww");
+  const response = await fetch("http://localhost:8080/events");
 
   if (!response.ok) {
     //오류 생성 및 처리 코드
@@ -26,9 +26,15 @@ export async function loader() {
     //   isError: true,
     //   message: "Could not fetch events.",
     // };
-    throw new Response(JSON.stringify({ message: "Could not fetch events." }), {
-      status: 500, //백엔드 에러
-    });
+    // throw new Response(JSON.stringify({ message: "Could not fetch events." }), {
+    //   status: 500, //백엔드 에러
+    // });
+    throw json(
+      { message: "Could not fetch events." },
+      {
+        status: 500,
+      }
+    );
   } else {
     // const resData = await response.json();
     // //const res = new Response(); //새로운 응답객체 생성
