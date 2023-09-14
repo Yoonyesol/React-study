@@ -27,9 +27,11 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+//새 이벤트를 저장할 때마다 트리거된다.
 router.post("/", async (req, res, next) => {
   const data = req.body;
 
+  //데이터 검증
   let errors = {};
 
   if (!isValidText(data.title)) {
@@ -57,7 +59,10 @@ router.post("/", async (req, res, next) => {
 
   try {
     await add(data);
-    res.status(201).json({ message: "Event saved.", event: data });
+    //form 게시 후 응답을 주기위한 시간지연
+    setTimeout(() => {
+      res.status(201).json({ message: "Event saved.", event: data });
+    }, 1500);
   } catch (error) {
     next(error);
   }
