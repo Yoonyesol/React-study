@@ -59,10 +59,7 @@ router.post("/", async (req, res, next) => {
 
   try {
     await add(data);
-    //form 게시 후 응답을 주기위한 시간지연
-    setTimeout(() => {
-      res.status(201).json({ message: "Event saved.", event: data });
-    }, 1500);
+    res.status(201).json({ message: "Event saved.", event: data });
   } catch (error) {
     next(error);
   }

@@ -25,6 +25,11 @@ export async function action({ request, params }) {
     body: JSON.stringify(eventData),
   });
 
+  //검증 오류 발생 시 상태코드(백엔드에서 설정)
+  if (response.status === 422) {
+    return;
+  }
+
   if (!response.ok) {
     throw json({ message: "Could not save event." }, { status: 500 });
   }
